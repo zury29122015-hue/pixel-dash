@@ -261,6 +261,7 @@ function update(){
     }
   }
   if(p.y>canvas.height+50){loseLife();return;}
+  p.crouching = crouching && p.onGround;
   if(p.inv>0) p.inv--;
 
   // Fire
@@ -435,6 +436,13 @@ function drawPlatform(pl,lvl){
 function drawPlayer(p){
   if(p.inv>0&&Math.floor(p.inv/6)%2===0) return;
   const x=Math.round(p.x),y=Math.round(p.y),s=p.sc||1,f=p.facing;
+  ctx.save();
+  if(p.crouching){
+    // Squish verticalmente anclado en los pies, un poco más ancho
+    ctx.translate(x+p.w/2, y+p.h);
+    ctx.scale(1.2, 0.52);
+    ctx.translate(-(x+p.w/2), -(y+p.h));
+  }
 
   // — Pantalón azul —
   ctx.fillStyle='#2255cc';
@@ -533,6 +541,7 @@ function drawPlayer(p){
   // — Outline negro (estilo cartoon) —
   ctx.strokeStyle='#111';ctx.lineWidth=s*1.2;
   ctx.beginPath();ctx.ellipse(x+13*s,y+7*s,10*s,10*s,0,0,Math.PI*2);ctx.stroke();
+  ctx.restore();
 }
 
 function drawEnemy(e,lvl){
