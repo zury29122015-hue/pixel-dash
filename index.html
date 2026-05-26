@@ -215,7 +215,7 @@ function initGame(level=1){
     lives:game?game.lives:3,
     over:false,won:false,
     cam:{x:0},
-    player:{x:40,y:gY-ph,w:pw,h:ph,vx:0,vy:0,onGround:false,facing:1,inv:0,sc:pSc},
+    player:{x:40,y:gY-ph,w:pw,h:ph,vx:0,vy:0,onGround:false,onFloat:false,facing:1,inv:0,sc:pSc,dropTimer:0},
     platforms,
     coins,enemies,
     flag:{x:flagX,y:gY-90},
@@ -239,22 +239,32 @@ function update(){
   p.vx=0;
   if(keys['ArrowLeft']||keys['a']){p.vx=-spd;p.facing=-1;}
   if(keys['ArrowRight']||keys['d']){p.vx=spd;p.facing=1;}
-  if((keys['ArrowUp']||keys[' ']||keys['w'])&&p.onGround){p.vy=jmp;p.onGround=false;}
+  const crouching=keys['ArrowDown']||keys['s'];
+  const jumping=keys['ArrowUp']||keys[' ']||keys['w'];
+  // Caer por plataforma (↓ o S, o ↓+salto)
+  if(crouching&&p.onFloat&&p.dropTimer<=0){
+    p.dropTimer=18;p.vy=3;p.onGround=false;p.onFloat=false;
+  } else if(jumping&&p.onGround){
+    p.vy=jmp;p.onGround=false;
+  }
 
   p.vy+=grav; p.x+=p.vx; p.y+=p.vy;
   p.x=Math.max(0,Math.min(game.worldW-p.w,p.x));
 
-  p.onGround=false;
+  if(p.dropTimer>0) p.dropTimer--;
+  p.onGround=false;p.onFloat=false;
   for(const pl of game.platforms){
+    if(p.dropTimer>0&&!pl.isGround) continue; // ignorar plataformas flotantes al caer
     if(p.x+p.w>pl.x&&p.x<pl.x+pl.w&&p.y+p.h>pl.y&&p.y+p.h<pl.y+pl.h+16&&p.vy>=0){
       p.y=pl.y-p.h;p.vy=0;p.onGround=true;
+      if(!pl.isGround) p.onFloat=true;
     }
   }
   if(p.y>canvas.height+50){loseLife();return;}
   if(p.inv>0) p.inv--;
 
   // Fire
-  if((keys['z']||keys['Z']||keys['x'])&&game.fc<=0){
+  if((keys['z']||keys['Z']||keys['x']||keys['rclick'])&&game.fc<=0){
     const w=th.wpn;
     game.projectiles.push({x:p.x+(p.facing>0?p.w+2:-6),y:p.y+p.h*0.4,vx:w.spd*p.facing,r:w.r,col:w.col,glow:w.glow,dmg:w.dmg,pierce:w.pierce});
     game.fc=25;
@@ -317,7 +327,7 @@ function loseLife(){
   livesEl.textContent='❤️'.repeat(Math.max(0,game.lives));
   spawnParts(game.player.x+game.player.w/2,game.player.y+game.player.h/2,'#e63946',12);
   if(game.lives<=0){game.over=true;setTimeout(()=>showEnd(false),800);}
-  else{const p=game.player;p.x=40;p.y=game.gY-p.h;p.vx=0;p.vy=0;p.inv=120;}
+  else{const p=game.player;p.x=40;p.y=game.gY-p.h;p.vx=0;p.vy=0;p.inv=120;p.dropTimer=0;p.onFloat=false;}
 }
 
 function showEnd(won){
@@ -663,6 +673,10 @@ document.getElementById('startBtn').addEventListener('click',()=>{
 });
 window.addEventListener('keydown',e=>{keys[e.key]=true;if(e.key===' ')e.preventDefault();});
 window.addEventListener('keyup',e=>{keys[e.key]=false;});
+// Click derecho = disparar
+canvas.addEventListener('contextmenu',e=>e.preventDefault());
+canvas.addEventListener('mousedown',e=>{if(e.button===2){keys['rclick']=true;e.preventDefault();}});
+window.addEventListener('mouseup',e=>{if(e.button===2)keys['rclick']=false;});
 
 // Mobile
 const ms=document.createElement('style');
