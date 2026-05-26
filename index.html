@@ -241,8 +241,8 @@ function update(){
   if(keys['ArrowRight']||keys['d']){p.vx=spd;p.facing=1;}
   const crouching=keys['ArrowDown']||keys['s'];
   const jumping=keys['ArrowUp']||keys[' ']||keys['w'];
-  // Caer por plataforma (↓ o S, o ↓+salto)
-  if(crouching&&p.onFloat&&p.dropTimer<=0){
+  // Caer por plataforma solo con ↓/S + salto juntos
+  if(crouching&&jumping&&p.onFloat&&p.dropTimer<=0){
     p.dropTimer=18;p.vy=3;p.onGround=false;p.onFloat=false;
   } else if(jumping&&p.onGround){
     p.vy=jmp;p.onGround=false;
