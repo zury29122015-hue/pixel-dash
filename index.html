@@ -264,20 +264,20 @@ function initGame(level=1){
     platforms.filter(p=>!p.isGround).forEach(pl=>{coins.push({x:pl.x+pl.w*.25,y:pl.y-30,c:false});coins.push({x:pl.x+pl.w*.5,y:pl.y-30,c:false});coins.push({x:pl.x+pl.w*.75,y:pl.y-30,c:false});});
     for(let px=100;px<worldW-300;px+=350) coins.push({x:px,y:gY-40,c:false});
     enemies=[
-      {x:280,y:gY-28,w:28,h:28,vx:1.5,dir:1,minX:100,maxX:400,hp:3,maxHp:3,ft:0},
-      {x:600,y:gY-28,w:28,h:28,vx:1.8,dir:-1,minX:450,maxX:800,hp:3,maxHp:3,ft:0},
-      {x:490,y:gY-238,w:24,h:24,vx:1.5,dir:1,minX:450,maxX:588,hp:2,maxHp:2,ft:0},
-      {x:1000,y:gY-28,w:28,h:28,vx:2,dir:1,minX:900,maxX:1200,hp:3,maxHp:3,ft:0},
-      {x:1300,y:gY-28,w:28,h:28,vx:1.8,dir:-1,minX:1100,maxX:1500,hp:3,maxHp:3,ft:0},
-      {x:1160,y:gY-194,w:24,h:24,vx:1.5,dir:1,minX:1130,maxX:1278,hp:2,maxHp:2,ft:0},
-      {x:1700,y:gY-28,w:28,h:28,vx:2,dir:1,minX:1600,maxX:1900,hp:3,maxHp:3,ft:0},
-      {x:2050,y:gY-28,w:28,h:28,vx:1.9,dir:-1,minX:1950,maxX:2200,hp:3,maxHp:3,ft:0},
-      {x:2250,y:gY-244,w:24,h:24,vx:1.6,dir:1,minX:2200,maxX:2338,hp:2,maxHp:2,ft:0},
-      {x:2500,y:gY-28,w:28,h:28,vx:2.1,dir:1,minX:2350,maxX:2700,hp:3,maxHp:3,ft:0},
-      {x:2780,y:gY-28,w:28,h:28,vx:2,dir:-1,minX:2650,maxX:2950,hp:3,maxHp:3,ft:0},
-      {x:3060,y:gY-28,w:28,h:28,vx:2.2,dir:1,minX:2950,maxX:3200,hp:3,maxHp:3,ft:0},
-      {x:3040,y:gY-244,w:24,h:24,vx:1.8,dir:-1,minX:3030,maxX:3168,hp:2,maxHp:2,ft:0},
-      {x:3300,y:gY-28,w:28,h:28,vx:2.3,dir:1,minX:3200,maxX:3440,hp:3,maxHp:3,ft:0}];
+      {x:280,y:gY-28,w:28,h:28,vx:1.5,dir:1,minX:100,maxX:400,hp:1,maxHp:1,ft:0},
+      {x:600,y:gY-28,w:28,h:28,vx:1.8,dir:-1,minX:450,maxX:800,hp:1,maxHp:1,ft:0},
+      {x:490,y:gY-238,w:24,h:24,vx:1.5,dir:1,minX:450,maxX:588,hp:1,maxHp:1,ft:0},
+      {x:1000,y:gY-28,w:28,h:28,vx:2,dir:1,minX:900,maxX:1200,hp:1,maxHp:1,ft:0},
+      {x:1300,y:gY-28,w:28,h:28,vx:1.8,dir:-1,minX:1100,maxX:1500,hp:1,maxHp:1,ft:0},
+      {x:1160,y:gY-194,w:24,h:24,vx:1.5,dir:1,minX:1130,maxX:1278,hp:1,maxHp:1,ft:0},
+      {x:1700,y:gY-28,w:28,h:28,vx:2,dir:1,minX:1600,maxX:1900,hp:1,maxHp:1,ft:0},
+      {x:2050,y:gY-28,w:28,h:28,vx:1.9,dir:-1,minX:1950,maxX:2200,hp:1,maxHp:1,ft:0},
+      {x:2250,y:gY-244,w:24,h:24,vx:1.6,dir:1,minX:2200,maxX:2338,hp:1,maxHp:1,ft:0},
+      {x:2500,y:gY-28,w:28,h:28,vx:2.1,dir:1,minX:2350,maxX:2700,hp:1,maxHp:1,ft:0},
+      {x:2780,y:gY-28,w:28,h:28,vx:2,dir:-1,minX:2650,maxX:2950,hp:1,maxHp:1,ft:0},
+      {x:3060,y:gY-28,w:28,h:28,vx:2.2,dir:1,minX:2950,maxX:3200,hp:1,maxHp:1,ft:0},
+      {x:3040,y:gY-244,w:24,h:24,vx:1.8,dir:-1,minX:3030,maxX:3168,hp:1,maxHp:1,ft:0},
+      {x:3300,y:gY-28,w:28,h:28,vx:2.3,dir:1,minX:3200,maxX:3440,hp:1,maxHp:1,ft:0}];
     flagX=3440;
   } else {
     platforms=[{x:0,y:gY,w:worldW,h:50,isGround:true}];
