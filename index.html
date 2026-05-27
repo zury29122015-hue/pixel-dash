@@ -600,6 +600,11 @@ function drawHUD(){
   } else {
     ctx.fillText(th.label.replace(/ .*/,'')+' ⚔ '+w.name,13,21);
   }
+  if(username==='ULTRA_GAMES'&&game.mode==='normal'){
+    ctx.fillStyle='rgba(0,0,0,0.55)';ctx.fillRect(8,30,148,14);
+    ctx.fillStyle='#ff00ff';ctx.font='6px "Press Start 2P",monospace';
+    ctx.fillText('🔧 [N] NEXT  [B] PREV',13,41);
+  }
 }
 function draw(){
   if(!game) return;
@@ -634,7 +639,25 @@ document.getElementById('startBtn').addEventListener('click',()=>{
   if(!username) showUsernameInput();
   else showMainMenu();
 });
-window.addEventListener('keydown',e=>{keys[e.key]=true;if(e.key===' ')e.preventDefault();});
+window.addEventListener('keydown',e=>{
+  keys[e.key]=true;
+  if(e.key===' ')e.preventDefault();
+  // ULTRA_GAMES skip: N = siguiente nivel, B = nivel anterior
+  if(username==='ULTRA_GAMES'&&game&&game.mode==='normal'&&!game.over&&!game.won){
+    if(e.key==='n'||e.key==='N'){
+      cancelAnimationFrame(animFrame);
+      const nl=game.level<5?game.level+1:1;
+      scoreEl.textContent=game.score;levelEl.textContent=nl;
+      initGame(nl);loop();
+    }
+    if(e.key==='b'||e.key==='B'){
+      cancelAnimationFrame(animFrame);
+      const pl=game.level>1?game.level-1:5;
+      scoreEl.textContent=game.score;levelEl.textContent=pl;
+      initGame(pl);loop();
+    }
+  }
+});
 window.addEventListener('keyup',e=>{keys[e.key]=false;});
 canvas.addEventListener('contextmenu',e=>e.preventDefault());
 canvas.addEventListener('mousedown',e=>{if(e.button===2||e.button===0){keys['rclick']=true;e.preventDefault();}});
