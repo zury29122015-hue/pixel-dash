@@ -167,7 +167,7 @@ function startNormal(){
 }
 function initGame(level=1){
   const W=canvas.width,H=canvas.height,gY=H-50;
-  const pSc=level===4?1.5:1,eSc=level===4?1.5:1;
+  const pSc=1,eSc=1;
   const worldW=level===1?1800:level===2?2000:level===3?2200:level===4?3500:5000;
   const pw=Math.round(26*pSc),ph=Math.round(36*pSc);
   const ew=Math.round(28*eSc),eh=Math.round(28*eSc);
@@ -254,7 +254,6 @@ function initGame(level=1){
       {x:2080,y:gY-223,w:26,h:26,vx:1.4,dir:-1,minX:2050,maxX:2138,hp:1,maxHp:1,ft:0}];
     flagX=2150;
   } else if(level===4){
-    const pe=Math.round(24*eSc);
     platforms=[{x:0,y:gY,w:worldW,h:50,isGround:true},
       {x:200,y:gY-130,w:160,h:20},{x:450,y:gY-210,w:140,h:20},{x:680,y:gY-150,w:160,h:20},
       {x:920,y:gY-240,w:130,h:20},{x:1130,y:gY-170,w:150,h:20},{x:1360,y:gY-240,w:130,h:20},
@@ -265,20 +264,20 @@ function initGame(level=1){
     platforms.filter(p=>!p.isGround).forEach(pl=>{coins.push({x:pl.x+pl.w*.25,y:pl.y-30,c:false});coins.push({x:pl.x+pl.w*.5,y:pl.y-30,c:false});coins.push({x:pl.x+pl.w*.75,y:pl.y-30,c:false});});
     for(let px=100;px<worldW-300;px+=350) coins.push({x:px,y:gY-40,c:false});
     enemies=[
-      {x:280,y:gY-eh,w:ew,h:eh,vx:1.5,dir:1,minX:100,maxX:400,hp:3,maxHp:3,ft:0},
-      {x:600,y:gY-eh,w:ew,h:eh,vx:1.8,dir:-1,minX:450,maxX:800,hp:3,maxHp:3,ft:0},
-      {x:490,y:gY-210-pe,w:pe,h:pe,vx:1.5,dir:1,minX:450,maxX:588,hp:2,maxHp:2,ft:0},
-      {x:1000,y:gY-eh,w:ew,h:eh,vx:2,dir:1,minX:900,maxX:1200,hp:3,maxHp:3,ft:0},
-      {x:1300,y:gY-eh,w:ew,h:eh,vx:1.8,dir:-1,minX:1100,maxX:1500,hp:3,maxHp:3,ft:0},
-      {x:1160,y:gY-170-pe,w:pe,h:pe,vx:1.5,dir:1,minX:1130,maxX:1278,hp:2,maxHp:2,ft:0},
-      {x:1700,y:gY-eh,w:ew,h:eh,vx:2,dir:1,minX:1600,maxX:1900,hp:3,maxHp:3,ft:0},
-      {x:2050,y:gY-eh,w:ew,h:eh,vx:1.9,dir:-1,minX:1950,maxX:2200,hp:3,maxHp:3,ft:0},
-      {x:2250,y:gY-220-pe,w:pe,h:pe,vx:1.6,dir:1,minX:2200,maxX:2338,hp:2,maxHp:2,ft:0},
-      {x:2500,y:gY-eh,w:ew,h:eh,vx:2.1,dir:1,minX:2350,maxX:2700,hp:3,maxHp:3,ft:0},
-      {x:2780,y:gY-eh,w:ew,h:eh,vx:2,dir:-1,minX:2650,maxX:2950,hp:3,maxHp:3,ft:0},
-      {x:3060,y:gY-eh,w:ew,h:eh,vx:2.2,dir:1,minX:2950,maxX:3200,hp:3,maxHp:3,ft:0},
-      {x:3040,y:gY-220-pe,w:pe,h:pe,vx:1.8,dir:-1,minX:3030,maxX:3168,hp:2,maxHp:2,ft:0},
-      {x:3300,y:gY-eh,w:ew,h:eh,vx:2.3,dir:1,minX:3200,maxX:3440,hp:3,maxHp:3,ft:0}];
+      {x:280,y:gY-28,w:28,h:28,vx:1.5,dir:1,minX:100,maxX:400,hp:3,maxHp:3,ft:0},
+      {x:600,y:gY-28,w:28,h:28,vx:1.8,dir:-1,minX:450,maxX:800,hp:3,maxHp:3,ft:0},
+      {x:490,y:gY-238,w:24,h:24,vx:1.5,dir:1,minX:450,maxX:588,hp:2,maxHp:2,ft:0},
+      {x:1000,y:gY-28,w:28,h:28,vx:2,dir:1,minX:900,maxX:1200,hp:3,maxHp:3,ft:0},
+      {x:1300,y:gY-28,w:28,h:28,vx:1.8,dir:-1,minX:1100,maxX:1500,hp:3,maxHp:3,ft:0},
+      {x:1160,y:gY-194,w:24,h:24,vx:1.5,dir:1,minX:1130,maxX:1278,hp:2,maxHp:2,ft:0},
+      {x:1700,y:gY-28,w:28,h:28,vx:2,dir:1,minX:1600,maxX:1900,hp:3,maxHp:3,ft:0},
+      {x:2050,y:gY-28,w:28,h:28,vx:1.9,dir:-1,minX:1950,maxX:2200,hp:3,maxHp:3,ft:0},
+      {x:2250,y:gY-244,w:24,h:24,vx:1.6,dir:1,minX:2200,maxX:2338,hp:2,maxHp:2,ft:0},
+      {x:2500,y:gY-28,w:28,h:28,vx:2.1,dir:1,minX:2350,maxX:2700,hp:3,maxHp:3,ft:0},
+      {x:2780,y:gY-28,w:28,h:28,vx:2,dir:-1,minX:2650,maxX:2950,hp:3,maxHp:3,ft:0},
+      {x:3060,y:gY-28,w:28,h:28,vx:2.2,dir:1,minX:2950,maxX:3200,hp:3,maxHp:3,ft:0},
+      {x:3040,y:gY-244,w:24,h:24,vx:1.8,dir:-1,minX:3030,maxX:3168,hp:2,maxHp:2,ft:0},
+      {x:3300,y:gY-28,w:28,h:28,vx:2.3,dir:1,minX:3200,maxX:3440,hp:3,maxHp:3,ft:0}];
     flagX=3440;
   } else {
     platforms=[{x:0,y:gY,w:worldW,h:50,isGround:true}];
